@@ -11,11 +11,10 @@ import (
 // NewManager returns a new manager for the server
 func NewManager(dep ginject.Injector) *manage.Manager {
 
-	gen := NewTokenGenerator(dep)
 	mgr := manage.NewManager()
 
-	mgr.MapTokenModel(gen)
-	mgr.MapAccessGenerate(gen)
+	mgr.MapTokenModel(NewToken())
+	mgr.MapAccessGenerate(NewTokenGenerator(dep))
 	mgr.MapAuthorizeGenerate(generates.NewAuthorizeGenerate())
 
 	mgr.MustTokenStorage(NewTokenStorage(dep))

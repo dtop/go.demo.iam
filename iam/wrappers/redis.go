@@ -20,6 +20,6 @@ func NewRedis(host string, port int) *redis.Client {
 	}
 
 	return redis.NewClient(&redis.Options{
-		Addr: fmt.Sprintf("%v%v", host, port),
+		Addr: fmt.Sprintf("%v:%v", host, port),
 	})
 }

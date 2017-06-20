@@ -44,6 +44,10 @@ func NewMySQL(sock, host string, port int, user, pass, base string) *MySQL {
 // Open opens a new database connection
 func (my *MySQL) Open() (link *sql.DB, err error) {
 
+	if my.link != nil {
+		my.Close()
+	}
+
 	link, err = sql.Open("mysql", my.dsn)
 	if err == nil {
 		my.link = link
@@ -58,4 +62,28 @@ func (my *MySQL) Close() {
 		my.link.Close()
 		my.link = nil
 	}
+}
+
+// Query executes a query callback and manages the open/close of the db link
+func (my *MySQL) Query(cb func(db *sql.DB) (*sql.Rows, error)) (*sql.Rows, error) {
+
+	link, err := my.Open()
+	if err != nil {
+		return nil, err
+	}
+
+	defer my.Close()
+	return cb(link)
+}
+
+// Exec executes a stmt callback and manages the open/close of the db link
+func (my *MySQL) Exec(cb func(db *sql.DB) (sql.Result, error)) (sql.Result, error) {
+
+	link, err := my.Open()
+	if err != nil {
+		return nil, err
+	}
+
+	defer my.Close()
+	return cb(link)
 }

@@ -1,6 +1,9 @@
 package iam
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/dtop/go.demo.iam/iam/endpoints"
 	"github.com/dtop/go.demo.iam/iam/wrappers"
 	"github.com/dtop/go.ginject"
@@ -41,7 +44,12 @@ func (iam *Iam) Bootstrap() {
 // Run runs the service
 func (iam Iam) Run() {
 
-	iam.gin.Run("9000")
+	server := &http.Server{
+		Addr:    fmt.Sprintf(":%d", 9020),
+		Handler: iam.gin,
+	}
+
+	server.ListenAndServe()
 }
 
 // ################## helpers
@@ -51,6 +59,7 @@ func (iam *Iam) createGin() {
 	iam.gin = gin.New()
 	iam.dep = ginject.New()
 
+	iam.gin.Use(gin.ErrorLogger())
 	iam.gin.Use(gin.Recovery())
 	iam.gin.Use(ginject.DependencyInjector(iam.dep))
 }
@@ -79,7 +88,7 @@ func (iam *Iam) setupDeps() {
 
 	deps.Register(ginject.IService(
 		"db",
-		wrappers.NewMySQL("", "localhost", -1, "demouser", "demopass", "demobase"),
+		wrappers.NewMySQL("", "localhost", -1, "demouser", "demopass", "demoiam"),
 	))
 
 	deps.Register(ginject.IService(

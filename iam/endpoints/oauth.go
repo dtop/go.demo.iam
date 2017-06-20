@@ -21,7 +21,7 @@ func Authorize(c *gin.Context) {
 	server.SetUserAuthorizationHandler(func(w http.ResponseWriter, r *http.Request) (userID string, err error) {
 
 		// auth users here
-		return "", nil
+		return "123456789", nil
 	})
 
 	server.HandleAuthorizeRequest(c)
@@ -38,7 +38,7 @@ func Token(c *gin.Context) {
 	server.SetClientInfoHandler(func(r *http.Request) (clientID, clientSecret string, err error) {
 
 		// return client infos here
-		return "", "", nil
+		return "0012545258985658", "abcdef", nil
 	})
 
 	server.HandleTokenRequest(c)
