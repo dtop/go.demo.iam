@@ -11,6 +11,7 @@ import (
 )
 
 type (
+	// Iam is the actual server object
 	Iam struct {
 		gin *gin.Engine
 		dep ginject.Injector

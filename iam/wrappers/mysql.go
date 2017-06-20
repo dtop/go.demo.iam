@@ -4,9 +4,11 @@ import (
 	"database/sql"
 	"fmt"
 
+	// needed by the actual database/sql for mysql
 	_ "github.com/go-sql-driver/mysql"
 )
 
+// MySQL represents the mysql wrapper object
 type MySQL struct {
 	dsn  string
 	link *sql.DB

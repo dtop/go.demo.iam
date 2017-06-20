@@ -18,7 +18,7 @@ type (
 		Domains []string
 	}
 
-	// Client storage represents the actual storage handler
+	// ClientStorage represents the actual storage handler
 	ClientStorage struct {
 		Db *wrappers.MySQL `inject:"db"`
 	}
@@ -26,6 +26,7 @@ type (
 
 // #################### ClientStorage
 
+// NewClientStorage creates and returns a new client storage including all dependencies
 func NewClientStorage(dep ginject.Injector) (oauth2.ClientStore, error) {
 
 	cs := &ClientStorage{}

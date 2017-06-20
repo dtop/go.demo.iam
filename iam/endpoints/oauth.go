@@ -10,6 +10,7 @@ import (
 	"gopkg.in/oauth2.v3"
 )
 
+// Authorize is the oauth /authorize endpoint
 func Authorize(c *gin.Context) {
 
 	manager := models.NewManager(ginject.Deps(c))
@@ -27,6 +28,7 @@ func Authorize(c *gin.Context) {
 	server.HandleAuthorizeRequest(c)
 }
 
+// Token is the oauth /token endpoint
 func Token(c *gin.Context) {
 
 	manager := models.NewManager(ginject.Deps(c))

@@ -16,7 +16,7 @@ type (
 	}
 )
 
-// NewTokenGenerator returns a brand new token generator
+// NewToken returns a brand new token generator
 func NewToken() *JWTGen {
 
 	gen := &JWTGen{}

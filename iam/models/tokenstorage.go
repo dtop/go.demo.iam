@@ -27,13 +27,14 @@ const (
 	PrefixAccessToken = "access_token"
 )
 
-// MyTokenStore implements oauth2.TokenStore
+// TokenStorage implements oauth2.TokenStore
 type TokenStorage struct {
 	dep   ginject.Injector
 	Db    *wrappers.MySQL `inject:"db"`
 	Redis *redis.Client   `inject:"redis"`
 }
 
+// NewTokenStorage creates and returns a new token storage including all dependencies set
 func NewTokenStorage(dep ginject.Injector) (oauth2.TokenStore, error) {
 
 	ts := &TokenStorage{dep: dep}

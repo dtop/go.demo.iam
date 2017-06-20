@@ -10,10 +10,12 @@ import (
 	"gopkg.in/oauth2.v3"
 )
 
+// TokenGenerator is the struct for the token generator
 type TokenGenerator struct {
 	keyProvider KeyProvider
 }
 
+// NewTokenGenerator creates a new token gen including all deps
 func NewTokenGenerator(dep ginject.Injector) *TokenGenerator {
 
 	kp, err := NewKeyProvider(dep)

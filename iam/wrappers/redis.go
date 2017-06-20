@@ -6,6 +6,7 @@ import (
 	"gopkg.in/redis.v4"
 )
 
+// Redis represents the actual redis wrapper object
 type Redis struct {
 	address string
 }
