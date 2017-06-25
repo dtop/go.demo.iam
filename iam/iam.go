@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
+	"os"
+	"path/filepath"
+
 	"github.com/dtop/go.demo.iam/iam/endpoints"
 	"github.com/dtop/go.demo.iam/iam/wrappers"
 	"github.com/dtop/go.ginject"
@@ -40,6 +43,9 @@ func (iam *Iam) Bootstrap() {
 
 	// setup dependencies
 	iam.setupDeps()
+
+	// setup templates
+	iam.setupTemplates()
 }
 
 // Run runs the service
@@ -71,16 +77,14 @@ func (iam *Iam) setupRoutes() {
 	{
 		oauthGroup.GET("/authorize", endpoints.Authorize)
 		oauthGroup.POST("/token", endpoints.Token)
+		oauthGroup.GET("/forward", endpoints.RealAuthorize)
 	}
 
-	//v1Group := iam.gin.Group("/v1")
-	//{
-	//
-	//	guiGroup := v1Group.Group("/gui")
-	//	{
-	//
-	//	}
-	//}
+	guigroup := iam.gin.Group("/gui")
+	{
+		guigroup.GET("/login", endpoints.Login)
+		guigroup.POST("/check", endpoints.ProcessLogin)
+	}
 }
 
 func (iam *Iam) setupDeps() {
@@ -96,4 +100,14 @@ func (iam *Iam) setupDeps() {
 		"redis",
 		wrappers.NewRedis("localhost", -1),
 	))
+}
+
+func (iam *Iam) setupTemplates() {
+
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		panic(err)
+	}
+
+	iam.gin.LoadHTMLGlob(fmt.Sprintf("%v/templates/*", dir))
 }

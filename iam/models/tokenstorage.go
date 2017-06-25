@@ -10,6 +10,8 @@ import (
 
 	"encoding/json"
 
+	"log"
+
 	"github.com/dtop/go.demo.iam/iam/wrappers"
 	"github.com/dtop/go.ginject"
 	"gopkg.in/oauth2.v3"
@@ -103,6 +105,7 @@ func (m TokenStorage) getData(key string, isCode bool) (oauth2.TokenInfo, error)
 
 	enc, err := m.Redis.Get(prefixedKey(prefix, key)).Result()
 	if err != nil {
+		log.Println(err)
 		return nil, err
 	}
 
@@ -115,11 +118,13 @@ func (m TokenStorage) buildToken(enc string, isCode bool) (oauth2.TokenInfo, err
 
 	raw, err := base64.StdEncoding.DecodeString(enc)
 	if err != nil {
+		log.Println(err)
 		return nil, err
 	}
 
 	token := &models.Token{}
 	if err := json.Unmarshal(raw, token); err != nil {
+		log.Println(err)
 		return nil, err
 	}
 

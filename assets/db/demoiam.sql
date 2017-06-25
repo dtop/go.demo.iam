@@ -82,7 +82,20 @@ CREATE TABLE `refresh_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+# Export von Tabelle user_data
+# ------------------------------------------------------------
 
+DROP TABLE IF EXISTS `user_data`;
+
+CREATE TABLE `user_data` (
+  `id` varchar(36) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `password` varchar(255) NOT NULL DEFAULT '',
+  `created` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_mail` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
