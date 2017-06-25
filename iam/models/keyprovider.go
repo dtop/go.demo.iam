@@ -8,7 +8,10 @@ import (
 	"crypto/x509"
 	"time"
 
+	"log"
+
 	"github.com/dtop/go.ginject"
+	"github.com/mendsley/gojwk"
 	"gopkg.in/redis.v4"
 )
 
@@ -22,6 +25,7 @@ type (
 	KeyProvider interface {
 		GetPrivateKey() *rsa.PrivateKey
 		GetPublicKey() *rsa.PublicKey
+		GetJWK() *gojwk.Key
 	}
 
 	keyProv struct {
@@ -81,4 +85,17 @@ func (kp *keyProv) GetPrivateKey() *rsa.PrivateKey {
 // GetPublicKey returns the public key
 func (kp *keyProv) GetPublicKey() *rsa.PublicKey {
 	return kp.pu
+}
+
+// GetJWK returns the JWK representation of the public key
+func (kp *keyProv) GetJWK() *gojwk.Key {
+
+	key, err := gojwk.PublicKey(kp.GetPublicKey())
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+
+	key.Use = "sign"
+	return key
 }

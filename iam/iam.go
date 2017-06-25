@@ -85,6 +85,8 @@ func (iam *Iam) setupRoutes() {
 		guigroup.GET("/login", endpoints.Login)
 		guigroup.POST("/check", endpoints.ProcessLogin)
 	}
+
+	iam.gin.GET("/iam/.well-known/key", endpoints.Key)
 }
 
 func (iam *Iam) setupDeps() {
