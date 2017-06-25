@@ -27,6 +27,7 @@ type (
 		errors []Err
 	}
 
+	// Err is the error struct
 	Err struct {
 		Field   string `json:"field"`
 		Message string `json:"message"`
