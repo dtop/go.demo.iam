@@ -3,7 +3,7 @@ Building an IAM service - tutorial project
 
 
 This tutorial project shows how to build an IAM service including user login (SSO).
-You can follow this [playlist](https://www.youtube.com/watch?v=KaYu4yxk2tQ&list=PLfWOND62Ti-cfmjwAXhhdLFtKo32i2Oio) 
+You can follow this [playlist](https://www.youtube.com/watch?v=Lg5LCdYU3Go&list=PLk2imHwYa7D51PlAZ-xMq7LtWI-rQ4vr4) 
 and checkout the branch that is mentioned under each video to properly follow the tutorial.
 
 Since this is a demo, I maybe did not respect all "guidelines" for having good software quality (e.g. most of the config
